@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="theme-color" content="#071923">
+<title>SAMIX WAR</title>
+<style>
+:root{--bg:#06151e;--panel:#0d2630;--gold:#d7b65d;--green:#16865e;--mint:#7de0b3;--white:#eff8f3;--muted:#a6c0b8}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(ellipse at 50% -15%,#1a4b45 0,#0a222c 42%,#041018 100%);color:var(--white);font-family:Tahoma,Arial,sans-serif;min-height:100vh}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.12;background-image:linear-gradient(30deg,transparent 47%,#d7b65d 48%,#d7b65d 50%,transparent 51%),linear-gradient(150deg,transparent 47%,#d7b65d 48%,#d7b65d 50%,transparent 51%);background-size:46px 46px}
+header{display:flex;align-items:center;justify-content:space-between;padding:13px 5vw;border-bottom:1px solid #d7b65d55;background:#06151edc;position:sticky;top:0;z-index:3;backdrop-filter:blur(12px)}
+.brand{display:flex;align-items:center;gap:10px}.mark{width:42px;height:42px;border:2px solid var(--gold);border-radius:13px;display:grid;place-items:center;color:var(--mint);font-weight:bold;box-shadow:0 0 18px #16865e55}.brand b{letter-spacing:2px;font-size:18px}.brand small{display:block;color:var(--gold);font-size:10px;letter-spacing:2px}
+button{font:inherit;color:var(--white);border:1px solid #d7b65d88;background:linear-gradient(145deg,#17443e,#0a222d);border-radius:13px;padding:11px 16px;cursor:pointer;box-shadow:inset 0 1px #ffffff12,0 5px 16px #0005}
+button:active{transform:scale(.98)}button.primary{background:linear-gradient(135deg,#b89542,#e0c875);color:#14251e;font-weight:bold}button.ghost{background:#0a1c25}
+main{max-width:1100px;margin:auto;padding:22px 5vw 45px}.hero{border:1px solid #d7b65d77;border-radius:24px;padding:clamp(22px,5vw,54px);background:linear-gradient(120deg,#0d2b33ee,#071821ee);position:relative;overflow:hidden;box-shadow:0 20px 55px #0007}
+.hero:after{content:"۞";position:absolute;left:4%;top:0;font-size:clamp(120px,25vw,260px);color:#d7b65d12;pointer-events:none}.eyebrow{color:var(--gold);letter-spacing:3px;font-size:12px}.hero h1{font-size:clamp(34px,7vw,70px);margin:12px 0 8px;letter-spacing:2px}.hero p{color:var(--muted);max-width:600px;line-height:1.8}.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:13px;margin-top:18px}.tile{background:linear-gradient(145deg,#12343b,#091d27);border:1px solid #7de0b344;border-radius:17px;padding:18px;min-height:110px;text-align:right}.tile strong{display:block;margin-bottom:7px}.tile small{color:var(--muted);line-height:1.5}
+.section{display:none}.section.active{display:block}.panel{background:#0b222c;border:1px solid #d7b65d55;border-radius:18px;padding:20px;margin-top:18px}.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.row>*{flex:1}.muted{color:var(--muted)}.choice{padding:16px;border:1px solid #7de0b355;border-radius:14px;background:#0b2029;min-width:130px}.choice.selected{border-color:var(--gold);box-shadow:0 0 0 1px var(--gold),0 0 18px #d7b65d22}
+input[type=range]{width:100%;accent-color:var(--gold)}select{background:#0b2029;color:white;border:1px solid #d7b65d66;border-radius:10px;padding:12px;width:100%}
+#gameWrap{display:none;position:fixed;inset:0;background:#02090d;z-index:10}#gameCanvas{width:100%;height:100%;display:block;touch-action:none}.hud{position:absolute;top:10px;right:10px;left:10px;display:flex;justify-content:space-between;pointer-events:none}.hud button{pointer-events:auto;padding:8px 12px}.pad{position:absolute;bottom:18px;left:18px;display:grid;grid-template-columns:repeat(3,48px);gap:5px}.pad button{height:45px;padding:0;font-size:20px;touch-action:none}.fire{position:absolute;bottom:27px;right:20px;border-radius:50%;width:76px;height:76px;background:#a57f2cdd}
+footer{text-align:center;color:#77968c;font-size:11px;padding:25px}.tag{display:inline-block;border:1px solid #d7b65d77;color:var(--gold);padding:5px 9px;border-radius:20px;font-size:11px}
+@media(min-width:750px){main{padding-top:34px}.hero{min-height:300px;display:flex;flex-direction:column;justify-content:center}}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand"><div class="mark">DZ</div><div><b>SAMIX WAR</b><small>DZ EDITION · OFFLINE</small></div></div>
+  <button class="ghost" onclick="toggleMusic()">♫ <span id="musicLabel">الموسيقى</span></button>
+</header>
+
+<main>
+  <section id="home" class="section active">
+    <div class="hero">
+      <span class="eyebrow">تجربة أركيد مستقلة · بدون إنترنت</span>
+      <h1>SAMIX WAR</h1>
+      <p>ميدان خيالي بطابع جزائري، زخارف هندسية مستوحاة من الزليج، وفرق يقودها الذكاء الاصطناعي. هذه نسخة أولية قابلة للتطوير.</p>
+      <div class="actions">
+        <button class="primary" onclick="show('setup')">ابدأ المهمة</button>
+        <button onclick="show('settings')">الإعدادات</button>
+        <button class="ghost" onclick="show('about')">حول اللعبة</button>
+      </div>
+    </div>
+    <div class="grid">
+      <div class="tile"><strong>20 ضد 20</strong><small>لاعب واحد مع 19 حليفاً آلياً ضد 20 خصماً آلياً</small></div>
+      <div class="tile"><strong>OFFLINE</strong><small>اللعب محلياً دون اتصال بالإنترنت</small></div>
+      <div class="tile"><strong>منظوران</strong><small>نموذج عرض أركيدي قابل للتطوير</small></div>
+      <div class="tile"><strong>طابع DZ</strong><small>ألوان جزائرية وزخارف هندسية</small></div>
+    </div>
+  </section>
+
+  <section id="setup" class="section">
+    <h2>تجهيز المهمة</h2><p class="muted">اختر إعدادات الجولة قبل البدء.</p>
+    <div class="panel">
+      <h3>اختيار العتاد الخيالي</h3>
+      <div class="row">
+        <div class="choice selected" id="gearA" onclick="pickGear('A')"><b>نبضة A</b><p class="muted">عتاد طاقة أركيدي</p></div>
+        <div class="choice" id="gearB" onclick="pickGear('B')"><b>نبضة B</b><p class="muted">عتاد طاقة سريع</p></div>
+      </div>
+      <h3>ساحة اللعب</h3>
+      <select id="mapChoice"><option value="city">المدينة القديمة</option><option value="desert">الهضبة الصحراوية</option></select>
+      <h3>طريقة العرض</h3>
+      <select id="viewChoice"><option>منظور علوي</option><option>منظور قريب</option></select>
+      <div class="actions"><button class="primary" onclick="startGame()">دخول الجولة</button><button onclick="show('home')">رجوع</button></div>
+    </div>
+  </section>
+
+  <section id="settings" class="section">
+    <h2>الإعدادات</h2>
+    <div class="panel">
+      <label>مستوى الموسيقى</label>
+      <input id="volume" type="range" min="0" max="100" value="55" oninput="setVolume(this.value)">
+      <p class="muted">أضف ملفاً صوتياً تملك حق استخدامه باسم audio/intro.mp3.</p>
+      <label><input type="checkbox" id="soundFx" checked> مؤثرات الواجهة</label>
+      <hr style="border-color:#ffffff22">
+      <label>جودة الرسوم</label>
+      <select><option>متوازنة</option><option>عالية</option><option>اقتصادية</option></select>
+      <div class="actions"><button onclick="show('home')">حفظ والعودة</button></div>
+    </div>
+  </section>
+
+  <section id="about" class="section">
+    <h2>حول SAMIX WAR</h2>
+    <div class="panel">
+      <span class="tag">الإصدار 1.0 · نموذج أولي</span>
+      <p>لعبة أركيد خيالية مستقلة، لا تمثل جيشاً أو جهة حقيقية. المواجهات رمزية وغير واقعية، ولا تتضمن محاكاة تدريب أو استخدام أسلحة حقيقية.</p>
+      <p class="muted">صنع بحب وبهوية جزائرية 🇩🇿</p>
+      <button onclick="show('home')">رجوع</button>
+    </div>
+  </section>
+</main>
+<footer>SAMIX WAR · DZ EDITION · OFFLINE PROTOTYPE</footer>
+
+<div id="gameWrap">
+  <canvas id="gameCanvas"></canvas>
+  <div class="hud"><button onclick="endGame()">✕ خروج</button><span class="tag" id="score">الفريق الأخضر 20 · الفريق الذهبي 20</span><button onclick="pauseGame()">Ⅱ</button></div>
+  <div class="pad">
+    <span></span><button data-dir="up">▲</button><span></span>
+    <button data-dir="left">◀</button><button data-dir="down">▼</button><button data-dir="right">▶</button>
+  </div>
+  <button class="fire" id="pulseBtn">نبضة</button>
+</div>
+
+<script>
+let audio=null, gear='A', running=false, paused=false;
+let player={x:0,y:0}, allies=[], foes=[], keys={}, pulses=[], kills=0;
+
+function show(id){
+  document.querySelectorAll('.section').forEach(x=>x.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+function pickGear(g){
+  gear=g;
+  document.getElementById('gearA').classList.toggle('selected',g==='A');
+  document.getElementById('gearB').classList.toggle('selected',g==='B');
+}
+function toggleMusic(){
+  if(!audio){
+    audio=new Audio('audio/intro.mp3');
+    audio.loop=true;
+    audio.volume=(document.getElementById('volume')?.value||55)/100;
+    audio.play().catch(()=>alert('أضف ملف intro.mp3 المرخّص إلى مجلد audio أولاً.'));
+  }else if(audio.paused){audio.play().catch(()=>{});}else{audio.pause();}
+  document.getElementById('musicLabel').textContent=audio.paused?'تشغيل':'إيقاف';
+}
+function setVolume(v){if(audio)audio.volume=v/100;}
+function startGame(){
+  document.getElementById('gameWrap').style.display='block';
+  if(audio)audio.pause();
+  initGame();running=true;paused=false;requestAnimationFrame(loop);
+}
+function endGame(){
+  running=false;
+  document.getElementById('gameWrap').style.display='none';
+  if(audio)audio.play().catch(()=>{});
+}
+function pauseGame(){paused=!paused;}
+function showHomeFromAndroid(){endGame();show('home');}
+function initGame(){
+  const c=document.getElementById('gameCanvas');
+  c.width=innerWidth*devicePixelRatio;c.height=innerHeight*devicePixelRatio;
+  const w=c.width,h=c.height;
+  player={x:w*.28,y:h*.5};allies=[];foes=[];pulses=[];kills=0;
+  for(let i=0;i<19;i++)allies.push({x:w*(.12+Math.random()*.25),y:h*Math.random()});
+  for(let i=0;i<20;i++)foes.push({x:w*(.65+Math.random()*.25),y:h*Math.random()});
+}
+function pulse(){pulses.push({x:player.x+18,y:player.y,life:40});}
+document.getElementById('pulseBtn').addEventListener('pointerdown',pulse);
+document.querySelectorAll('[data-dir]').forEach(b=>{
+  const d=b.dataset.dir;
+  b.addEventListener('pointerdown',e=>{e.preventDefault();keys[d]=true;});
+  ['pointerup','pointercancel','pointerleave'].forEach(ev=>b.addEventListener(ev,()=>keys[d]=false));
+});
+function loop(t){
+  if(!running)return;
+  requestAnimationFrame(loop);
+  if(paused)return;
+  const c=document.getElementById('gameCanvas'),ctx=c.getContext('2d'),w=c.width,h=c.height;
+  ctx.clearRect(0,0,w,h);
+  ctx.fillStyle=document.getElementById('mapChoice').value==='desert'?'#6b6042':'#173b37';
+  ctx.fillRect(0,0,w,h);
+  ctx.globalAlpha=.22;ctx.strokeStyle='#d9c078';ctx.lineWidth=2;
+  for(let x=0;x<w;x+=70){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,h);ctx.stroke();}
+  for(let y=0;y<h;y+=70){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(w,y);ctx.stroke();}
+  ctx.globalAlpha=1;
+  const sp=5*devicePixelRatio;
+  if(keys.up)player.y-=sp;if(keys.down)player.y+=sp;
+  if(keys.left)player.x-=sp;if(keys.right)player.x+=sp;
+  player.x=Math.max(15,Math.min(w-15,player.x));player.y=Math.max(15,Math.min(h-15,player.y));
+  function dot(p,color,r){
+    ctx.fillStyle=color;ctx.beginPath();ctx.arc(p.x,p.y,r*devicePixelRatio,0,Math.PI*2);ctx.fill();
+    ctx.strokeStyle='#ffffff88';ctx.stroke();
+  }
+  allies.forEach((a,i)=>{
+    a.x+=Math.sin(t/900+i)*.35*devicePixelRatio;
+    a.y+=Math.cos(t/1000+i)*.25*devicePixelRatio;
+    dot(a,'#37d99a',7);
+  });
+  foes.forEach((f,i)=>{
+    const dx=player.x-f.x,dy=player.y-f.y,d=Math.hypot(dx,dy)||1;
+    f.x+=dx/d*.45*devicePixelRatio;f.y+=dy/d*.45*devicePixelRatio;
+    dot(f,'#e5b84f',7);
+  });
+  pulses.forEach(p=>{
+    p.x+=9*devicePixelRatio;p.life--;
+    ctx.strokeStyle='#9fffe0';ctx.lineWidth=3;ctx.beginPath();
+    ctx.arc(p.x,p.y,7*devicePixelRatio,0,Math.PI*2);ctx.stroke();
+    for(let i=foes.length-1;i>=0;i--){
+      if(Math.hypot(foes[i].x-p.x,foes[i].y-p.y)<18*devicePixelRatio){
+        foes.splice(i,1);kills++;
+        document.getElementById('score').textContent='الخصوم المتبقون: '+foes.length+' · النقاط: '+kills;
+      }
+    }
+  });
+  pulses=pulses.filter(p=>p.life>0);
+  dot(player,'#f4f8ee',10);
+  ctx.fillStyle='#fff';ctx.font=(14*devicePixelRatio)+'px Arial';
+  ctx.fillText('أنت',player.x-12,player.y-18);
+  if(foes.length===0){
+    ctx.fillStyle='#fff';ctx.font=(24*devicePixelRatio)+'px Arial';
+    ctx.fillText('انتهت الجولة! أحسنت.',w*.35,h*.5);running=false;
+  }
+}
+window.addEventListener('resize',()=>{if(running)initGame();});
+</script>
+</body>
+</html>
